@@ -4,7 +4,7 @@
    https://www.virtualbox.org/wiki/Downloads
  
  -  For Apple Silicon (ARM architecture), UTM seems to be the best free choice. In parallel, VMWare Player is also a good choice.
-   https://www.virtualbox.org/wiki/Downloads
+   https://mac.getutm.app/
 
 In this bootstrap, I'm going to use UTM as my virtualization solution.
 
@@ -30,25 +30,35 @@ Knowing that we have a VM without graphic interface, we should choose a type of 
 
 To add SSH key to the VM, we need to:
 1. Verify that you already have a ssh key on your machine:
-   ```cd /home/$username/.ssh```
+   ```bash
+   cd /home/$username/.ssh
+   ```
    
 3. If you already have one, skip this step. To generate a key:
-   ```ssh-keygen -t rsa```
+   ```bash
+   ssh-keygen -t rsa
+   ```
    You should see a ```id_rsa.pub```file now.
    
-4. Do a first SSH connection to your VM and create a ```.ssh``` folder:
-   ```ssh Vm@vm mkdir -p .ssh```
+5. Do a first SSH connection to your VM and create a ```.ssh``` folder:
+   ```bash
+   ssh Vm@vm mkdir -p .ssh
+   ```
    Vm@vm means your VM's hostname and your VM's ip.
    Example: debian@192.168.1.153
    Type in your VM password
    
-5. From now on, you can do the ssh connection to your VM by doing
-   ```ssh debian@192.168.1.153```
+6. From now on, you can do the ssh connection to your VM by doing
+   ```bash
+   ssh debian@192.168.1.153
+   ```
    
-6. However, to do a connection using your ssh key, we need to copy the key into the VM by doing:
-   ```cat .ssh/id_rsa.pub | ssh Vm@vm 'cat >> .ssh/authorized_keys```
+7. However, to do a connection using your ssh key, we need to copy the key into the VM by doing:
+   ```bash
+   cat .ssh/id_rsa.pub | ssh Vm@vm 'cat >> .ssh/authorized_keys
+    ```
 
-7. From now on, you can log into your VM without using a password
+8. From now on, you can log into your VM without using a password
 
 
 **Do a clone of this version to avoid redo the whole set up in case error**
@@ -56,4 +66,18 @@ To add SSH key to the VM, we need to:
 In Virtualbox, you can setup a snapshot instead of create a new VM in this case of UTM.
 
 ![clone.png](./images/clone.png)
+
+
+## 2. Ansible
+
+**Necessary elements to use Ansible**
+
+```bash
+brew install ansible
+```
+
+Check if ansible is correctly installed on your device
+```bash
+ansible --version
+```
 

@@ -1,0 +1,7 @@
+---
+- name: "Base role, init Ansible"
+  hosts: "debian"
+  become: true
+  roles:
+    - first
+...

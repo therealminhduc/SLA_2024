@@ -1,0 +1,23 @@
+- name: "Update apt cache"
+  shell: apt-get update --allow-releaseinfo-change
+
+- name: "Install emacs-nox"
+  apt:
+    name: emacs-nox
+    state: present
+
+- name: "Name / Date in default prompt"
+  lineinfile:
+    path: "/home/debian/.bashrc"
+    regexp: '^PS1='
+    line: 'PS1="\h \d \[\e[36m\]\w\[\e[m\] \$ "'
+
+- name: "Check if emacs-nox is installed"
+  become: true
+  shell: dpkg -l | grep emacs-nox
+  register: emacs_nox_status
+  ignore_errors: true
+
+- name: "Display result"
+  debug:
+    var: emacs_nox_status.stdout_lines
