@@ -1,0 +1,4 @@
+---
+- name: "my_ansible_role_bootstrap"
+  src: https://github.com/therealminhduc/SLA_2024.git
+  version: mynkie

@@ -12,6 +12,17 @@
     regexp: '^PS1='
     line: 'PS1="\h \d \[\e[36m\]\w\[\e[m\] \$ "'
 
+- name: "Create user and assign SSH key"
+  user:
+    name: bootstrap
+    state: present
+    createhome: yes
+
+- name: "Add SSH key to authorized_keys"
+  authorized_keys:
+    user: bootstrap
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBefytxmXwjkZSZckOEg4AXnMate4JFux8rnxncQj8GC ducbv1407@gmail.com"
+
 - name: "Check if emacs-nox is installed"
   become: true
   shell: dpkg -l | grep emacs-nox
