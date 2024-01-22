@@ -1,4 +1,4 @@
-## Virtualization software choice
+ ## Virtualization software choice
 
  - For Linux & Windows users, it's suggested to use Virtualbox.
    https://www.virtualbox.org/wiki/Downloads
@@ -80,4 +80,53 @@ Check if ansible is correctly installed on your device
 ```bash
 ansible --version
 ```
+
+
+**Folder structure**
+
+- T-NSA-700-PAR-24
+    - ansible
+        - firstrole
+            - playbooks
+            - tasks
+            - inventories
+            - meta
+            - requirements.yml
+
+**Syntax**
+Check files to see syntaxes
+
+**What's the use of Ansible galaxy ?**
+The Ansible role should be structured within a Git repository.
+This repository should contain the necessary files for Ansible roles.
+
+```meta/main.yml```will define the metadata of the role.
+```requirements.yml``` is a way to declare dependencies for the Ansbile project. These dependencies can include roles from Ansible Galaxy or other Git repositories.
+
+
+To install dependencies declared in ```requirements.yml```, we should use the ```ansible-galaxy``` command
+
+```bash
+ansible-galaxy install -r requirements.yml
+```
+
+This command installs the roles specified in ```requirements.yml```, makingt them available for use in your Ansible project.
+
+**Launch / Apply Ansible**
+
+Use command:
+
+```bash
+ansible-playbook -i inventories/inventory.yml playbook.yml -kK
+```
+
+
+
+
+
+
+
+
+
+
 
