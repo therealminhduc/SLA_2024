@@ -1,0 +1,24 @@
+---
+
+- name: "Create .ssh directory"
+  file:
+    path: "/home/{{ ansible_ssh_user }}/.ssh"
+    state: directory
+
+- name: "Create empty authorized_keys file"
+  file:
+    path: "/home/{{ ansible_ssh_user }}/.ssh/authorized_keys"
+    state: touch
+
+- name: "Include ssh public key file"
+  include_vars:
+    file: ssh_public_key.yml
+
+#- name: "Print variable"
+#  debug:
+#    var: publicKey
+
+- name: "Insert public key"
+  lineinfile:
+    path: "/home/{{ ansible_ssh_user }}/.ssh/authorized_keys"
+    line: "{{ publicKey }}"
