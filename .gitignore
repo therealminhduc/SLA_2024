@@ -1,3 +1,4 @@
 .DS_Storex
 .idea
 vault-password-file.txt
+roles/ssh/tasks/ssh_public_key.yml
