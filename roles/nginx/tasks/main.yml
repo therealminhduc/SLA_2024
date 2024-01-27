@@ -1,0 +1,52 @@
+---
+- name: "Install NGINX"
+  apt:
+    name: nginx
+    state: present
+
+- name: "Enable NGINX's service"
+  systemd:
+    name: nginx
+    enabled: yes
+
+- name: "Set owner and group for /var/www"
+  file:
+    path: /var/www
+    owner: www-data
+    group: www-data
+    mode: "0755"
+    # file permissions: do anything with the file or directory, and other users can read and execute it but not alter it
+    # owner can read/write/execute, group/others can read/execute
+
+- name: "Verify that back is correctly imported"
+  stat:
+    path: "/var/www/app"
+  register: app_data
+
+- name: "Report if back is correctly imported"
+  debug:
+    msg: "The app folder existed at /var/www"
+  when: app_data.stat.exists
+
+- name: "Import project"
+  copy:
+    src: /Users/minhduc/Documents/MSc1/T-NSA-700-PAR_24/app/back #we should find a way to use relative path instead of absolute path here
+    dest: /var/www
+  when: app_data.stat.exists == False
+
+- name: "Create directory for server block configuration"
+  file:
+    path: /etc/nginx/conf.d
+    state: directory
+    mode: "0755"
+
+# TODO: server block
+#- name: "Configuration for server block"
+#  template:
+#    src: templates/nginx.conf.j2
+#    dest: /etc/nginx/conf.d/
+
+- name: "Restart nginx service"
+  systemd:
+    name: nginx
+    state: restarted

@@ -1,0 +1,4 @@
+---
+php_version: "php7.1"
+version: "7.1"
+timezone: "Europe/Paris"

@@ -3,7 +3,7 @@
   hosts: "back"
   become: true
   roles:
-    - nginx
-    - php
     - copy
+    - php
+    - nginx
 ...
