@@ -1,9 +1,9 @@
 ---
 - name: "Backend VM"
-  hosts: "back"
+  hosts: "debian"
   become: true
   roles:
-    - php
     - nginx
-    - copy
+    - php
+#    - copy
 ...

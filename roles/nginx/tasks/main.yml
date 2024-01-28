@@ -1,8 +1,15 @@
 ---
+#- name: "Install NGINX"
+#  apt:
+#    name: nginx
+#    state: present
+
+- name: "Update apt cache"
+  become: true
+  command: apt-get update --allow-releaseinfo-change
+
 - name: "Install NGINX"
-  apt:
-    name: nginx
-    state: present
+  apt: name=nginx state=present
 
 - name: "Enable NGINX's service"
   systemd:
@@ -31,7 +38,7 @@
 - name: "Import project"
   copy:
     src: /Users/minhduc/Documents/MSc1/T-NSA-700-PAR_24/app/back #we should find a way to use relative path instead of absolute path here
-    dest: /var/www
+    dest: /var/www/
   when: app_data.stat.exists == False
 
 - name: "Create directory for server block configuration"

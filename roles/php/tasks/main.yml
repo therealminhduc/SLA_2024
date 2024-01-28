@@ -1,16 +1,23 @@
 ---
+#- name: "Update apt cache"
+#  become: yes
+#  apt:
+#    update_cache: yes
+
 - name: "Update apt cache"
-  apt:
-    update_cache: yes
+  become: true
+  command: apt-get update --allow-releaseinfo-change
+
 
 - name: "Install PHP"
   become: yes
   apt:
-    name: {{ php_version }}
+    name: "{{ php_version }}"
     state: present
 
 - name: "Install PHP's extensions"
-  apt: name={{ php_version }}-{{ item }}
+  apt:
+    name: "{{ php_version }}-{{ item }}"
   with_items:
     - cli
     - pdo
@@ -22,14 +29,20 @@
     - xml
     - bcmath
     - intl
-  state: present
+#  state: present
+
+- name: Install curl
+  become: true
+  apt:
+    name: curl
+    state: present
 
 
 - name: "Install Composer"
   shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 - name: "Launch composer install"
-  shell: cd /var/www/app && sudo composer install
+  shell: cd /var/www/back && sudo composer install
 
 - name: "Configure local.ini"
   template:
