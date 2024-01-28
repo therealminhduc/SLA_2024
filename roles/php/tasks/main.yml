@@ -36,8 +36,8 @@
     src: templates/local.ini.j2
     dest: /usr/local/etc/php/conf.d/local.ini
 
-- name: "Symlink phpmyadmin"
-  command: ln -s /usr/local/www/phpMyAdmin/ /usr/local/www/nginx/phpmyadmin/
+#- name: "Symlink phpmyadmin"
+#  command: ln -s /usr/local/www/phpMyAdmin/ /usr/local/www/nginx/phpmyadmin/
 
 - name: "Restart php-fpm"
   command: service php-fpm restart
