@@ -8,7 +8,6 @@
   become: true
   command: apt-get update --allow-releaseinfo-change
 
-
 - name: "Install PHP"
   become: yes
   apt:
@@ -19,6 +18,7 @@
   apt:
     name: "{{ php_version }}-{{ item }}"
   with_items:
+    - fpm
     - cli
     - pdo
     - mysqli
@@ -37,12 +37,11 @@
     name: curl
     state: present
 
-
 - name: "Install Composer"
   shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-- name: "Launch composer install"
-  shell: cd /var/www/back && sudo composer install
+#- name: "Launch composer install"
+#  shell: cd /var/www/back && sudo composer install
 
 - name: "Configure local.ini"
   template:

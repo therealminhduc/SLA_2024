@@ -37,7 +37,7 @@
 
 - name: "Import project"
   copy:
-    src: /Users/minhduc/Documents/MSc1/T-NSA-700-PAR_24/app/back #we should find a way to use relative path instead of absolute path here
+    src: ../../app/back #we should find a way to use relative path instead of absolute path here
     dest: /var/www/
   when: app_data.stat.exists == False
 
