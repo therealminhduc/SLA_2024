@@ -33,13 +33,19 @@
   args:
     chdir: /var/www/back
 
+- name: "Update composer"
+  environment:
+    COMPOSER_ALLOW_SUPERUSER: "1"
+  composer:
+    command: update
+    working_dir: /var/www/back
+
 - name: "Composer install"
   environment:
     COMPOSER_ALLOW_SUPERUSER: "1"
   composer:
     command: install
     global_command: false
-    args: "--ignore-platform-reqs"
     working_dir: /var/www/back
 
 - name: "Give permissions to vendor"
@@ -60,15 +66,9 @@
   args:
     chdir: /var/www/back
 
-- name: "Update project"
-  become: true
-  become_user: nsa
-  command: composer update
-  args:
-    chdir: /var/www/back
-#- name: "php artisan"
-#  become: true
-#  commmand: php artisan clear:cache
-#  args:
-#    chdir: /var/www/back
-
+- name: "Update composer"
+  environment:
+    COMPOSER_ALLOW_SUPERUSER: "1"
+  composer:
+    command: update
+    working_dir: /var/www/back
