@@ -4,6 +4,9 @@
 - name: "Give permissions to composer.json"
   command: sudo chown -R nsa:nsa /var/www/back/composer.json
 
+- name: "Give permissions to composer.lock"
+  command: sudo chown -R nsa:nsa /var/www/back/composer.lock
+
 - name: "Ensure bootstrap/cache directory exists"
   become: yes
   file:
@@ -14,6 +17,13 @@
 - name: "Ensure bootstrap/cache directory is writable"
   become: yes
   command: sudo chown -R nsa:nsa /var/www/back/bootstrap/cache
+
+- name: "dump reload"
+  become: true
+  become_user: nsa
+  command: composer dump-autoload
+  args:
+    chdir: /var/www/back
 
 - name: "Update project's dependencies"
   become: yes
