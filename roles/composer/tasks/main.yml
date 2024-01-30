@@ -62,11 +62,11 @@
   args:
     chdir: /var/www/back
 
-- name: "php artisan"
-  become: true
-  commmand: php artisan clear:cache
-  args:
-    chdir: /var/www/back
+#- name: "php artisan"
+#  become: true
+#  commmand: php artisan clear:cache
+#  args:
+#    chdir: /var/www/back
 
 - name: "Generate key"
   become: yes
