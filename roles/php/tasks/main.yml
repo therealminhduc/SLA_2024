@@ -37,19 +37,13 @@
     name: curl
     state: present
 
-- name: "Install Composer"
-  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-#- name: "Launch composer install"
-#  shell: cd /var/www/back && sudo composer install
-
-- name: "Configure local.ini"
-  template:
-    src: templates/local.ini.j2
-    dest: /usr/local/etc/php/conf.d/local.ini
+#- name: "Configure local.ini"
+#  template:
+#    src: templates/local.ini.j2
+#    dest: /usr/local/etc/php/conf.d/local.ini
 
 #- name: "Symlink phpmyadmin"
 #  command: ln -s /usr/local/www/phpMyAdmin/ /usr/local/www/nginx/phpmyadmin/
 
-- name: "Restart php-fpm"
-  command: service php-fpm restart
+#- name: "Restart php-fpm"
+#  command: sudo service php-fpm restart

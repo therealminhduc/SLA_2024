@@ -27,7 +27,7 @@
 
 - name: "Verify that back is correctly imported"
   stat:
-    path: "/var/www/app"
+    path: "/var/www/back"
   register: app_data
 
 - name: "Report if back is correctly imported"
@@ -37,7 +37,7 @@
 
 - name: "Import project"
   copy:
-    src: ../../app/back #we should find a way to use relative path instead of absolute path here
+    src: ../../app/back
     dest: /var/www/
   when: app_data.stat.exists == False
 
@@ -47,11 +47,24 @@
     state: directory
     mode: "0755"
 
-# TODO: server block
-#- name: "Configuration for server block"
-#  template:
-#    src: templates/nginx.conf.j2
-#    dest: /etc/nginx/conf.d/
+- name: "Give permissions to folders"
+  file:
+    path: /var/www/back/storage
+    state: directory
+    mode: "0755"
+
+- name: "Configuration for server block"
+  template:
+    src: templates/back.j2
+    dest: /etc/nginx/sites-available/back
+
+- name: "Activate new virtual host configuration file"
+  shell: sudo ln -s /etc/nginx/sites-available/back /etc/nginx/sites-enabled/
+  args:
+    creates: /etc/nginx/sites-enabled/back
+
+- name: "Confirm that NGINX configuration does not have any syntax errors"
+  shell: sudo nginx -t
 
 - name: "Restart nginx service"
   systemd:
