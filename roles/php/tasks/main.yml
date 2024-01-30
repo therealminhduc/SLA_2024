@@ -1,9 +1,4 @@
 ---
-#- name: "Update apt cache"
-#  become: yes
-#  apt:
-#    update_cache: yes
-
 - name: "Update apt cache"
   become: true
   command: apt-get update --allow-releaseinfo-change
@@ -14,15 +9,10 @@
     name: "{{ php_version }}"
     state: present
 
-- name: "Install unzip"
-  become: yes
-  apt:
-    name: unzip
-    state: present
-
 - name: "Install PHP's extensions"
   apt:
     name: "{{ php_version }}-{{ item }}"
+    state: present
   with_items:
     - fpm
     - cli
@@ -35,20 +25,16 @@
     - xml
     - bcmath
     - intl
-#  state: present
+
+- name: "Install unzip"
+  become: yes
+  apt:
+    name: unzip
+    state: present
 
 - name: Install curl
   become: true
   apt:
     name: curl
     state: present
-#- name: "Configure local.ini"
-#  template:
-#    src: templates/local.ini.j2
-#    dest: /usr/local/etc/php/conf.d/local.ini
-
-#- name: "Symlink phpmyadmin"
-#  command: ln -s /usr/local/www/phpMyAdmin/ /usr/local/www/nginx/phpmyadmin/
-
-#- name: "Restart php-fpm"
-#  command: sudo service php-fpm restart
+...

@@ -1,15 +1,12 @@
 ---
-#- name: "Install NGINX"
-#  apt:
-#    name: nginx
-#    state: present
-
 - name: "Update apt cache"
   become: true
   command: apt-get update --allow-releaseinfo-change
 
 - name: "Install NGINX"
-  apt: name=nginx state=present
+  apt:
+    name: nginx
+    state: present
 
 - name: "Enable NGINX's service"
   systemd:
@@ -18,9 +15,9 @@
 
 - name: "Set owner and group for /var/www"
   file:
-    path: /var/www
-    owner: www-data
-    group: www-data
+    path: /var/www/
+    owner: "{{ www_data }}"
+    group: "{{ www_data }}"
     mode: "0755"
     # file permissions: do anything with the file or directory, and other users can read and execute it but not alter it
     # owner can read/write/execute, group/others can read/execute
@@ -47,12 +44,6 @@
     state: directory
     mode: "0755"
 
-- name: "Give permissions to folders"
-  file:
-    path: /var/www/back/storage
-    state: directory
-    mode: "0755"
-
 - name: "Configuration for server block"
   template:
     src: templates/back.j2
@@ -70,3 +61,4 @@
   systemd:
     name: nginx
     state: restarted
+...

@@ -1,11 +1,9 @@
+---
 - name: "Install Composer"
   shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 - name: "Give permissions to composer.json"
-  command: sudo chown -R nsa:nsa /var/www/back/composer.json
-
-- name: "Give permissions to composer.lock"
-  command: sudo chown -R nsa:nsa /var/www/back/composer.lock
+  command: sudo chown -R "{{ ansible_ssh_user }}":"{{ ansible_ssh_user }}" /var/www/back/composer.json
 
 - name: "Ensure bootstrap/cache directory exists"
   become: yes
@@ -16,11 +14,11 @@
 
 - name: "Ensure bootstrap/cache directory is writable"
   become: yes
-  command: sudo chown -R nsa:nsa /var/www/back/bootstrap/cache
+  command: sudo chown -R "{{ ansible_ssh_user }}":"{{ ansible_ssh_user }}" /var/www/back/bootstrap/cache
 
 - name: "Ensure www-data user has access to /storage directory"
   become: yes
-  command: sudo chown -R www-data:www-data /var/www/back/storage
+  command: sudo chown -R "{{ www_data }}":"{{ www_data }}" /var/www/back/storage
 
 - name: "Give all permission /storage directory"
   become: yes
@@ -28,7 +26,7 @@
 
 - name: "Clear project's cache"
   become: true
-  become_user: nsa
+  become_user: "{{ ansible_ssh_user }}"
   command: composer clear-cache
   args:
     chdir: /var/www/back
@@ -49,11 +47,11 @@
     working_dir: /var/www/back
 
 - name: "Give permissions to vendor"
-  command: sudo chown -R nsa:nsa /var/www/back/vendor
+  command: sudo chown -R {{ ansible_ssh_user }}:{{ ansible_ssh_user }} /var/www/back/vendor
 
 - name: "Update project's dependencies"
   become: yes
-  become_user: nsa
+  become_user: "{{ ansible_ssh_user }}"
   composer:
     command: require
     arguments: laravel/framework:5.8.*
@@ -61,7 +59,7 @@
 
 - name: "Generate key"
   become: yes
-  become_user: nsa
+  become_user: "{{ ansible_ssh_user }}"
   command: sudo php artisan key:generate
   args:
     chdir: /var/www/back
@@ -72,3 +70,4 @@
   composer:
     command: update
     working_dir: /var/www/back
+...
