@@ -34,6 +34,7 @@
   composer:
     command: install
     global_command: false
+    args: "--ignore-platform-reqs"
     working_dir: /var/www/back
 
 - name: "Give permissions to vendor"
