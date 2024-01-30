@@ -7,6 +7,9 @@
 - name: "Give permissions to composer.lock"
   command: sudo chown -R nsa:nsa /var/www/back/composer.lock
 
+- name: "Give permissions to vendor"
+  command: sudo chown -R nsa:nsa /var/www/back/vendor
+
 - name: "Ensure bootstrap/cache directory exists"
   become: yes
   file:
@@ -19,11 +22,14 @@
   command: sudo chown -R nsa:nsa /var/www/back/bootstrap/cache
 
 - name: "Composer install"
-  become: true
-  become_user: nsa
-  command: composer install
-  args:
-    chdir: /var/www/back
+  #  become: true
+  #  become_user: nsa
+  environment:
+    COMPOSER_ALLOW_SUPERUSER: "1"
+  composer:
+    command: install
+    global_command: false
+    working_dir: /var/www/back
 
 - name: "Update project's dependencies"
   become: yes
