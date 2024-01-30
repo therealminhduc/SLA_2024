@@ -14,6 +14,12 @@
     name: "{{ php_version }}"
     state: present
 
+- name: "Install unzip"
+  become: yes
+  apt:
+    name: unzip
+    state: present
+
 - name: "Install PHP's extensions"
   apt:
     name: "{{ php_version }}-{{ item }}"
@@ -36,7 +42,6 @@
   apt:
     name: curl
     state: present
-
 #- name: "Configure local.ini"
 #  template:
 #    src: templates/local.ini.j2

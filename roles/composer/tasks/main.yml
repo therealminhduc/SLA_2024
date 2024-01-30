@@ -12,7 +12,7 @@
   file:
     path: /var/www/back/bootstrap/cache
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: "Ensure bootstrap/cache directory is writable"
   become: yes
@@ -26,15 +26,19 @@
   become: yes
   command: sudo chmod -R 775 /var/www/back/storage
 
+- name: "Clear project's cache"
+  become: true
+  become_user: nsa
+  command: composer clear-cache
+  args:
+    chdir: /var/www/back
+
 - name: "Composer install"
-  #  become: true
-  #  become_user: nsa
   environment:
     COMPOSER_ALLOW_SUPERUSER: "1"
   composer:
     command: install
     global_command: false
-    args: "--ignore-platform-reqs"
     working_dir: /var/www/back
 
 - name: "Give permissions to vendor"
@@ -48,10 +52,10 @@
     arguments: laravel/framework:5.8.*
     working_dir: /var/www/back
 
-- name: "Clear project's cache"
-  become: true
+- name: "Generate key"
+  become: yes
   become_user: nsa
-  command: composer clear-cache
+  command: sudo php artisan key:generate
   args:
     chdir: /var/www/back
 
@@ -61,16 +65,9 @@
   command: composer update
   args:
     chdir: /var/www/back
-
 #- name: "php artisan"
 #  become: true
 #  commmand: php artisan clear:cache
 #  args:
 #    chdir: /var/www/back
 
-- name: "Generate key"
-  become: yes
-  become_user: nsa
-  command: sudo php artisan key:generate
-  args:
-    chdir: /var/www/back
