@@ -13,7 +13,7 @@
   when: ansible_selinux.status == "enabled"
 
 - name: Copy MySQL configuration file
-  template: src=my.cnf.j2 dest=/root/.my.cnf
+  template: src=my.cnf.j2 dest=/etc/mysql/mariadb.conf.d/50-server.cnf
   notify:
     - restart mysql
 
