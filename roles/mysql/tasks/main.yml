@@ -24,4 +24,4 @@
   mysql_db: name=NSADB state=present
 
 - name: Create Application DB User
-  mysql_user: name=user password=user priv=*.*:ALL host='%' state=present
+  mysql_user: name= "{{ mysql_user }}" password="{{ mysql_password }}" priv=*.*:ALL host='%' state=present
