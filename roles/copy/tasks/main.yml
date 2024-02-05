@@ -1,7 +1,7 @@
 ---
 - name: "Verify if app existed on VM"
   stat:
-    path: "/var/www/app"
+    path: "/var/www/back"
   register: app_data
 
 - name: "Report if app existed"

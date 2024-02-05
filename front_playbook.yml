@@ -1,0 +1,8 @@
+---
+- name: "Template VM"
+  hosts: "debian"
+  become: true
+  roles:
+    - front
+    - apache
+...
