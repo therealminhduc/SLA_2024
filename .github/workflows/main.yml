@@ -1,0 +1,13 @@
+name: Run Laravel backend unit tests
+
+run-name: ${{ github.actor }} is testing out GitHub Actions
+
+on: [push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      # TODO: continue ...
