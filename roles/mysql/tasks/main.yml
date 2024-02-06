@@ -21,7 +21,7 @@
   service: name=mysql state=started enabled=yes
 
 - name: Create Application Database
-  mysql_db: name=NSADB state=present
+  mysql_db: name="{{ mysql_db }}" state=present
 
 - name: Create Application DB User
-  mysql_user: name= "{{ mysql_user }}" password="{{ mysql_password }}" priv=*.*:ALL host='%' state=present
+  mysql_user: name="{{ mysql_user }}" password="{{ mysql_password }}" priv=*.*:ALL host='%' state=present
