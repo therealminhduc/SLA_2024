@@ -35,6 +35,7 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
+          cd app/back
           composer install --no-scripts
           
       - name: Cache composer dependencies
