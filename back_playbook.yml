@@ -1,6 +1,6 @@
 ---
 - name: "Backend VM"
-  hosts: "debian"
+  hosts: "back"
   become: true
   roles:
     - nginx

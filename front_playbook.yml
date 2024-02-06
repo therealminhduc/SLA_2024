@@ -1,6 +1,6 @@
 ---
 - name: "Template VM"
-  hosts: "debian"
+  hosts: "front"
   become: true
   roles:
     - front

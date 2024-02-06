@@ -1,6 +1,6 @@
 ---
 - name: "Template VM"
-  hosts: "debian"
+  hosts: "db"
   become: true
   roles:
     - mysql
