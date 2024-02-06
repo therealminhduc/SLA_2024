@@ -1,7 +1,6 @@
 ---
 - name: "Template VM"
-  hosts: "debian"
+  hosts: "front:back:db"
   become: true
   roles:
     - ssh
-...
