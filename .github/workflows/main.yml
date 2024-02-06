@@ -1,0 +1,58 @@
+name: Run Laravel backend unit tests
+
+#on:
+#  push:
+#    branches: [dev]
+
+on: [push]
+
+jobs:
+  continuous-integration:
+    name: Laravel (PHP ${{ matrix.php-versions }})
+    runs-on: ubuntu-latest
+
+    services:
+      mariadb:
+        #10.3.39 mariadb
+        image: mariadb:10.3.39
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.1
+
+      - name: Install Composer dependencies
+        run: |
+          cd app/back
+          composer install --no-scripts
+          
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-
+
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.ci .env
+          cd app/back
+          php artisan key:generate
+
+      - name: Run Testsuite
+        run: |
+          cd app/back
+          php artisan test
