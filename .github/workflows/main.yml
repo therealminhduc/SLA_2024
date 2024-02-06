@@ -49,7 +49,10 @@ jobs:
       - name: Prepare Laravel Application
         run: |
           cp .env.ci .env
+          cd app/back
           php artisan key:generate
 
       - name: Run Testsuite
-        run: php artisan test
+        run: |
+          cd app/back
+          php artisan test
