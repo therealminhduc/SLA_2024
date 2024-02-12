@@ -1,0 +1,57 @@
+---
+- name: "Clear Composer cache"
+  become: true
+  command: composer clear-cache
+  args:
+    chdir: app/back
+
+- name: "Update composer"
+  environment:
+    COMPOSER_ALLOW_SUPERUSER: "1"
+  composer:
+    command: update
+    working_dir: app/back
+
+- name: "Install Composer dependencies"
+  environment:
+    COMPOSER_ALLOW_SUPERUSER: "1"
+  composer:
+    command: install
+    global_command: false
+    working_dir: app/back
+
+- name: "Update dependencies"
+  become: yes
+  composer:
+    command: require
+    arguments: laravel/framework:5.8.*
+    working_dir: app/back
+
+- name: "Copy .env"
+  copy:
+    src: ../../.env.ci
+    dest: app/back/.env
+
+- name: "Generate key"
+  become: yes
+  command: sudo php artisan key:generate
+  args:
+    chdir: app/back
+
+- name: "Run tests"
+  become: yes
+  command: vendor/bin/phpunit
+  args:
+    chdir: app/back
+  register: test_output
+
+- name: "Extract number of tests passed"
+  set_fact:
+    passed_tests: "{{ test_output.stdout | regex_findall('(?<=OK \\()\\d+') | first | int }}"
+  when: test_output.stdout is defined and test_output.stdout != ''
+
+- name: "Print number of tests passed"
+  ansible.builtin.debug:
+    msg: "Number of tests passed: {{ passed_tests }}"
+  when: passed_tests is defined
+...

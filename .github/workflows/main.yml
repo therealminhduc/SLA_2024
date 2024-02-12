@@ -20,30 +20,9 @@ jobs:
         with:
           php-version: 7.1
 
-      - name: Clear Composer cache
-        run: |
-          cd app/back
-          composer clear-cache
-          composer update
-
-      - name: Install Composer dependencies
-        run: |
-          cd app/back
-          composer install
-          
-      - name: Update dependencies
-        run: |
-          cd app/back
-          composer require laravel/framework:5.8.*
-
-      - name: Prepare Laravel Application
-        run: |
-          cd app/back
-          touch .env
-          cp ../../.env.ci .env
-          php artisan key:generate
-
-      - name: Run Tests
-        run: |
-          cd app/back
-          vendor/bin/phpunit
+      - name: Run Ansible playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: ci_playbook.yml
+          directory: ./
+          vault_password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
