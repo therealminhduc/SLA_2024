@@ -3,7 +3,7 @@ name: back_deployment
 on:
   push:
     branches:
-      - main
+      - testMain
 
 jobs:
   deployment:
