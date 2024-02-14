@@ -1,0 +1,32 @@
+name: Build and Deploy Angular App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "9.4"
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: app/front
+
+      - name: Build Angular app
+        run: npm run build --prod
+        working-directory: app/front
+
+      - name: Archive build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: angular-dist
+          path: app/front/dist/front
