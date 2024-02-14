@@ -20,12 +20,20 @@ jobs:
         with:
           php-version: 7.1
 
-      - name: Run CI Ansible playbook
-        uses: dawidd6/action-ansible-playbook@v2
-        with:
-          playbook: ci_playbook.yml
-          directory: ./
-          vault_password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+#      - name: Run CI Ansible playbook
+#        uses: dawidd6/action-ansible-playbook@v2
+#        with:
+#          playbook: ci_playbook.yml
+#          directory: ./
+#          vault_password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+
+      - name: Build artifact
+        run: |
+          mkdir -r artifacts
+          cp -r app/back artifacts
+          cd artifacts
+          zip -r back_artifact.zip back
+
 
       - name: Archive back production artifacts
         uses: actions/upload-artifact@v4
