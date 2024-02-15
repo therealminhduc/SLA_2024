@@ -3,6 +3,7 @@ all:
     back:
       ansible_ssh_user: nsa
       ansible_host: 192.168.64.4
+      ansible_port: 22
       ansible_sudo_pass: !vault |
         $ANSIBLE_VAULT;1.1;AES256
         33643837646164383366613732666562643139633462363261616662376261616464373733636364
@@ -14,6 +15,7 @@ all:
     front:
       ansible_ssh_user: nsa
       ansible_host: 192.168.64.5
+      ansible_port: 23
       ansible_sudo_pass: !vault |
         $ANSIBLE_VAULT;1.1;AES256
         33643837646164383366613732666562643139633462363261616662376261616464373733636364
@@ -24,6 +26,7 @@ all:
     db:
       ansible_ssh_user: nsa
       ansible_host: 192.168.64.6
+      ansible_port: 24
       ansible_sudo_pass: !vault |
         $ANSIBLE_VAULT;1.1;AES256
         33643837646164383366613732666562643139633462363261616662376261616464373733636364
