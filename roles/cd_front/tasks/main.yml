@@ -1,0 +1,30 @@
+---
+- name: Install curl
+  apt:
+    name: curl
+    state: present
+  become: true
+  when: ansible_os_family == "Debian"
+
+- name: Send curl request
+  shell: >
+    curl -L -H "Accept: application/vnd.github+json" \
+         -H "Authorization: Bearer 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" \
+         -H "X-GitHub-Api-Version: 2022-11-28" \
+         "https://api.github.com/repos/therealminhduc/SLA_2024/actions/artifacts" | jq '.artifacts[0].archive_download_url' > idte.txt
+
+- name: Send curl request
+  shell: >
+    sed 's/\"//g' idte.txt > frontid
+
+- name: Send curl request
+  shell: >
+    curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" -H "X-GitHub-Api-Version: 2022-11-28" -o firmaware.zip $(cat frontid)
+  args:
+    executable: /bin/bash
+
+- name: Send curl request
+  shell: >
+    unzip firmaware.zip -d /var/www/html
+  args:
+    executable: /bin/bash
