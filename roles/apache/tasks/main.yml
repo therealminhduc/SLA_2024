@@ -14,22 +14,22 @@
     - proxy
     - proxy_http
 
-- name: Restart Apache
-  service:
-    name: apache2
-    state: restarted
+# - name: Restart Apache
+#   service:
+#     name: apache2
+#     state: restarted
 
 - name: Configure Apache Virtual Host
   template:
     src: ../apache.conf.j2
     dest: /etc/apache2/sites-available/angular-app.conf
-  notify: Restart Apache
+  # notify: Restart Apache
 
 - name: Enable Apache Virtual Host
   apache2_module:
     state: present
     name: proxy_http
-  notify: Restart Apache  
+  # notify: Restart Apache  
 
 - name: Move dist folder to Apache document root
   become: yes
