@@ -64,6 +64,13 @@
   args:
     chdir: /var/www/back
 
+- name: "Migrate database"
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  command: sudo php artisan migrate
+  args:
+    chdir: /var/www/back
+
 - name: "Update composer"
   environment:
     COMPOSER_ALLOW_SUPERUSER: "1"
