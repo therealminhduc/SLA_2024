@@ -26,3 +26,8 @@ jobs:
           playbook: ci_playbook.yml
           directory: ./
           vault_password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+          options: |
+            --extra-vars "db_host=${{ secrets.DB_HOST }} db_port=${{ secrets.DB_PORT }} db_database=${{ secrets.DB_DATABASE }} db_username=${{ secrets.DB_USERNAME }} db_password=${{ secrets.DB_PASSWORD }}"
+
+      - name: Display .env contents
+        run: cat app/back/.env
