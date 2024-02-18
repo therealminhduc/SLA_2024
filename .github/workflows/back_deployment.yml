@@ -1,4 +1,4 @@
-name: back_deployment
+name: Build and Deploy Laravel App
 
 on:
   push:
