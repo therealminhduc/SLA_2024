@@ -37,7 +37,7 @@ A ```main.yml``` workflow is used to launch Laravel's unit tests on each push to
 ### Continuous deployment
 For each part of the project(back and front), we have separate workflows, which will generate artifacts on each push to `main` branch.
 
-
+## Contributors
 - Vu Minh Duc BUI
 - Nicolas TRAN
 - Chun LAM
