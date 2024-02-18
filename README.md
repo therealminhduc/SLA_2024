@@ -1,9 +1,8 @@
 # SLA_2024
+T-NSA-700-PAR-24
 
 ## What's this ?
-This is an Epitech's project (module T-NSA-700-PAR-24).
-
-The goal of this project is to automate the installationn, test, build & deployment of a project (CI/CD), with Laravel as back-end and Angular as front end. These parts are available at /app directory.
+The goal of this project is to automate the installation, test, build & deployment of a project (CI/CD), with Laravel as back-end and Angular as front end. These parts are available at /app directory.
 
 ## About the infrastructure
 We decided to do the deployment on 3 Debian 10 VMs (back, front and db).
